@@ -6,6 +6,6 @@ namespace BlogEngine.Core.Entities
 		public int RoleId { get; set; }
 		public string Name { get; set; }
 
-		public User? User { get; set; }
+		public ICollection<User> Users { get; set; } = new List<User>();
 	}
 }

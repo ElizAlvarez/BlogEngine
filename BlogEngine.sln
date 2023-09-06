@@ -5,7 +5,7 @@ VisualStudioVersion = 25.0.1705.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogEngine", "BlogEngine\BlogEngine.csproj", "{85A9762C-B43D-4516-8494-C4A1BF6656E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogEngine.Data", "BlogEngine.Infrastructure\BlogEngine.Data.csproj", "{DF709CA2-D545-4FF1-BD5B-4E01F4C2D33F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogEngine.Data", "BlogEngine.Data\BlogEngine.Data.csproj", "{DF709CA2-D545-4FF1-BD5B-4E01F4C2D33F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogEngine.Core", "BlogEngine.Core\BlogEngine.Core.csproj", "{BEA34102-9F5E-4920-91D3-2E7D410CC36B}"
 EndProject

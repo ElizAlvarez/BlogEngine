@@ -6,7 +6,7 @@ namespace BlogEngine.Core.Entities
 		public int PostStatusId { get; set; }
 		public string Name { get; set; }
 
-        public Post? Post { get; set; }
+		public ICollection<Post> Post { get; set; } = new List<Post>();
     }
 }
 

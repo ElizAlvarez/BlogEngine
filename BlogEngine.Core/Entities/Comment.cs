@@ -7,7 +7,7 @@ namespace BlogEngine.Core.Entities
 		public int PostId { get; set; }
 		public string CommentContent { get; set; }
 		public DateTime CreationDate { get; set; }
-		public int CreatedById { get; set; }
+		public int UserId { get; set; }
 		public bool IsByEditor { get; set; }
 
 		public User User { get; set; }

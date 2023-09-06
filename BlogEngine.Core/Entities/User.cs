@@ -11,7 +11,8 @@ namespace BlogEngine.Core.Entities
 		public int RoleId { get; set; }
 
 		public Role Role { get; set; } = null!;
-		public Post Post { get; set; } = null!;
+		public ICollection<Post> Posts { get; set; } = new List<Post>();
+		public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 	}
 }
 
