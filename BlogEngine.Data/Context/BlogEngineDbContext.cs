@@ -7,7 +7,7 @@ namespace BlogEngine.Data.Context
 	{        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=localhost;Database=BlogTest;User ID=sa;Password=Azuquitarpalcafe76_;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer(@"Server=localhost;Database=[Database];User ID=[User];Password=[Password];TrustServerCertificate=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
