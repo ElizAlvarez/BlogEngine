@@ -10,8 +10,8 @@ namespace BlogEngine.Core.Entities
 		public int UserId { get; set; }
 		public bool IsByEditor { get; set; }
 
-		public User User { get; set; }
-		public Post Post { get; set; }
+		public User? User { get; set; }
+		public Post? Post { get; set; }
 	}
 }
 

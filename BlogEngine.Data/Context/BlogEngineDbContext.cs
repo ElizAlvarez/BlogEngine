@@ -3,16 +3,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlogEngine.Data.Context
 {
-	public class BlogEngineContext : DbContext
-	{
+	public class BlogEngineDbContext : DbContext
+	{        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=localhost;Database=BlogEngine;User ID=sa;Password=Azuquitarpalcafe76_;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer(@"Server=localhost;Database=BlogTest;User ID=sa;Password=Azuquitarpalcafe76_;TrustServerCertificate=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.HasDefaultSchema("dbo");
 
             modelBuilder.Entity<Post>().ToTable("Post");
@@ -20,6 +19,17 @@ namespace BlogEngine.Data.Context
             modelBuilder.Entity<Comment>().ToTable("Comment");
             modelBuilder.Entity<Role>().ToTable("Role");
             modelBuilder.Entity<PostStatus>().ToTable("PostStatus");
+
+            modelBuilder.Entity<Post>().HasKey(e => e.PostId);
+            modelBuilder.Entity<User>().HasKey(e => e.UserId);
+            modelBuilder.Entity<Comment>().HasKey(e => e.CommentId);
+            modelBuilder.Entity<Role>().HasKey(e => e.RoleId);
+            modelBuilder.Entity<PostStatus>().HasKey(e => e.PostStatusId);
+
+            modelBuilder.Entity<Comment>()
+                .Property(e => e.CommentId)
+                .UseIdentityColumn(1, 1)
+                .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Comment>()
                 .HasOne(e => e.User)
@@ -34,6 +44,11 @@ namespace BlogEngine.Data.Context
                 .IsRequired();
 
             modelBuilder.Entity<Post>()
+                .Property(e => e.PostId)
+                .UseIdentityColumn(1, 1)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Post>()
                 .HasOne(e => e.User)
                 .WithMany(e => e.Posts)
                 .HasForeignKey(e => e.UserId)
@@ -45,10 +60,21 @@ namespace BlogEngine.Data.Context
                 .HasForeignKey(e => e.CommentId)
                 .IsRequired(false);
 
+            modelBuilder.Entity<Post>()
+                .HasOne(e => e.PostStatus)
+                .WithMany(e => e.Posts)
+                .HasForeignKey(e => e.PostStatusId)
+                .IsRequired();
+
             modelBuilder.Entity<User>().HasData(
                 new User { UserId = 1, UserName = "NubeM", Name = "Nube", LastName = "Mejia", Email = "nubem@gmail.com", RoleId = 1 },
                 new User { UserId = 2, UserName = "JuanD", Name = "Juan", LastName = "Ojeda", Email = "Juand@gmail.com", RoleId = 2 },
                 new User { UserId = 3, UserName = "RayoC", Name = "Rayuela", LastName = "Castro", Email = "rayitoc@gmail.com", RoleId = 3 }) ;
+
+            modelBuilder.Entity<User>()
+               .Property(e => e.UserId)
+               .UseIdentityColumn(1, 1)
+               .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<User>()
                 .HasOne(e => e.Role)
@@ -59,7 +85,8 @@ namespace BlogEngine.Data.Context
             modelBuilder.Entity<User>()
                 .HasMany(e => e.Posts)
                 .WithOne(e => e.User)
-                .HasForeignKey(e => e.PostId);
+                .HasForeignKey(e => e.PostId)
+                .IsRequired(false);
 
             modelBuilder.Entity<Role>().HasData(
                new Role { RoleId = 1, Name = "Public" },
@@ -69,18 +96,13 @@ namespace BlogEngine.Data.Context
             modelBuilder.Entity<Role>()
                 .HasMany(e => e.Users)
                 .WithOne(e => e.Role)
-                .HasForeignKey(e => e.UserId);
+                .HasForeignKey(e => e.UserId)
+                .IsRequired(false);
 
             modelBuilder.Entity<PostStatus>().HasData(
                new PostStatus { PostStatusId = 1, Name = "Created" },
                new PostStatus { PostStatusId = 2, Name = "Pending" },
                new PostStatus { PostStatusId = 3, Name = "Published" });
-
-            modelBuilder.Entity<PostStatus>()
-               .HasMany(e => e.Post)
-               .WithOne(e => e.PostStatus)
-               .HasForeignKey(e => e.PostId)
-               .IsRequired();
 
         }
 

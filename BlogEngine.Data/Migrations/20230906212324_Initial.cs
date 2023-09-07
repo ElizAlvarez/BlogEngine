@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BlogEngine.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDbBlogEngine : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -49,7 +49,8 @@ namespace BlogEngine.Data.Migrations
                 schema: "dbo",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -64,8 +65,7 @@ namespace BlogEngine.Data.Migrations
                         column: x => x.UserId,
                         principalSchema: "dbo",
                         principalTable: "Role",
-                        principalColumn: "RoleId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "RoleId");
                 });
 
             migrationBuilder.CreateTable(
@@ -73,7 +73,8 @@ namespace BlogEngine.Data.Migrations
                 schema: "dbo",
                 columns: table => new
                 {
-                    PostId = table.Column<int>(type: "int", nullable: false),
+                    PostId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TextContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -84,8 +85,8 @@ namespace BlogEngine.Data.Migrations
                 {
                     table.PrimaryKey("PK_Post", x => x.PostId);
                     table.ForeignKey(
-                        name: "FK_Post_PostStatus_PostId",
-                        column: x => x.PostId,
+                        name: "FK_Post_PostStatus_PostStatusId",
+                        column: x => x.PostStatusId,
                         principalSchema: "dbo",
                         principalTable: "PostStatus",
                         principalColumn: "PostStatusId",
@@ -95,8 +96,7 @@ namespace BlogEngine.Data.Migrations
                         column: x => x.PostId,
                         principalSchema: "dbo",
                         principalTable: "User",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
@@ -104,7 +104,8 @@ namespace BlogEngine.Data.Migrations
                 schema: "dbo",
                 columns: table => new
                 {
-                    CommentId = table.Column<int>(type: "int", nullable: false),
+                    CommentId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     PostId = table.Column<int>(type: "int", nullable: false),
                     CommentContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -151,11 +152,28 @@ namespace BlogEngine.Data.Migrations
                     { 3, "Editor" }
                 });
 
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "User",
+                columns: new[] { "UserId", "Email", "LastName", "Name", "RoleId", "UserName" },
+                values: new object[,]
+                {
+                    { 1, "nubem@gmail.com", "Mejia", "Nube", 1, "NubeM" },
+                    { 2, "Juand@gmail.com", "Ojeda", "Juan", 2, "JuanD" },
+                    { 3, "rayitoc@gmail.com", "Castro", "Rayuela", 3, "RayoC" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Comment_UserId",
                 schema: "dbo",
                 table: "Comment",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Post_PostStatusId",
+                schema: "dbo",
+                table: "Post",
+                column: "PostStatusId");
         }
 
         /// <inheritdoc />

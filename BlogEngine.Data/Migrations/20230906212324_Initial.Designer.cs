@@ -11,9 +11,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BlogEngine.Data.Migrations
 {
-    [DbContext(typeof(BlogEngineContext))]
-    [Migration("20230906054908_BlogEngine-v4")]
-    partial class BlogEnginev4
+    [DbContext(typeof(BlogEngineDbContext))]
+    [Migration("20230906212324_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,7 +29,10 @@ namespace BlogEngine.Data.Migrations
             modelBuilder.Entity("BlogEngine.Core.Entities.Comment", b =>
                 {
                     b.Property<int>("CommentId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"));
 
                     b.Property<string>("CommentContent")
                         .IsRequired()
@@ -57,7 +60,10 @@ namespace BlogEngine.Data.Migrations
             modelBuilder.Entity("BlogEngine.Core.Entities.Post", b =>
                 {
                     b.Property<int>("PostId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PostId"));
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
@@ -77,6 +83,8 @@ namespace BlogEngine.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("PostId");
+
+                    b.HasIndex("PostStatusId");
 
                     b.ToTable("Post", "dbo");
                 });
@@ -152,7 +160,10 @@ namespace BlogEngine.Data.Migrations
             modelBuilder.Entity("BlogEngine.Core.Entities.User", b =>
                 {
                     b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -226,15 +237,13 @@ namespace BlogEngine.Data.Migrations
 
             modelBuilder.Entity("BlogEngine.Core.Entities.Post", b =>
                 {
-                    b.HasOne("BlogEngine.Core.Entities.PostStatus", "PostStatus")
-                        .WithMany("Post")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BlogEngine.Core.Entities.User", "User")
                         .WithMany("Posts")
-                        .HasForeignKey("PostId")
+                        .HasForeignKey("PostId");
+
+                    b.HasOne("BlogEngine.Core.Entities.PostStatus", "PostStatus")
+                        .WithMany("Posts")
+                        .HasForeignKey("PostStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -247,9 +256,7 @@ namespace BlogEngine.Data.Migrations
                 {
                     b.HasOne("BlogEngine.Core.Entities.Role", "Role")
                         .WithMany("Users")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Role");
                 });
@@ -261,7 +268,7 @@ namespace BlogEngine.Data.Migrations
 
             modelBuilder.Entity("BlogEngine.Core.Entities.PostStatus", b =>
                 {
-                    b.Navigation("Post");
+                    b.Navigation("Posts");
                 });
 
             modelBuilder.Entity("BlogEngine.Core.Entities.Role", b =>

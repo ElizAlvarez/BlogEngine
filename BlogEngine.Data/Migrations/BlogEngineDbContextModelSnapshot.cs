@@ -4,19 +4,16 @@ using BlogEngine.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace BlogEngine.Data.Migrations
 {
-    [DbContext(typeof(BlogEngineContext))]
-    [Migration("20230906050732_BlogEngine-v2")]
-    partial class BlogEnginev2
+    [DbContext(typeof(BlogEngineDbContext))]
+    partial class BlogEngineDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,7 +26,10 @@ namespace BlogEngine.Data.Migrations
             modelBuilder.Entity("BlogEngine.Core.Entities.Comment", b =>
                 {
                     b.Property<int>("CommentId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"));
 
                     b.Property<string>("CommentContent")
                         .IsRequired()
@@ -57,7 +57,10 @@ namespace BlogEngine.Data.Migrations
             modelBuilder.Entity("BlogEngine.Core.Entities.Post", b =>
                 {
                     b.Property<int>("PostId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PostId"));
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
@@ -77,6 +80,8 @@ namespace BlogEngine.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("PostId");
+
+                    b.HasIndex("PostStatusId");
 
                     b.ToTable("Post", "dbo");
                 });
@@ -152,7 +157,10 @@ namespace BlogEngine.Data.Migrations
             modelBuilder.Entity("BlogEngine.Core.Entities.User", b =>
                 {
                     b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -176,6 +184,35 @@ namespace BlogEngine.Data.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("User", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Email = "nubem@gmail.com",
+                            LastName = "Mejia",
+                            Name = "Nube",
+                            RoleId = 1,
+                            UserName = "NubeM"
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            Email = "Juand@gmail.com",
+                            LastName = "Ojeda",
+                            Name = "Juan",
+                            RoleId = 2,
+                            UserName = "JuanD"
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            Email = "rayitoc@gmail.com",
+                            LastName = "Castro",
+                            Name = "Rayuela",
+                            RoleId = 3,
+                            UserName = "RayoC"
+                        });
                 });
 
             modelBuilder.Entity("BlogEngine.Core.Entities.Comment", b =>
@@ -197,15 +234,13 @@ namespace BlogEngine.Data.Migrations
 
             modelBuilder.Entity("BlogEngine.Core.Entities.Post", b =>
                 {
-                    b.HasOne("BlogEngine.Core.Entities.PostStatus", "PostStatus")
-                        .WithMany("Post")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BlogEngine.Core.Entities.User", "User")
                         .WithMany("Posts")
-                        .HasForeignKey("PostId")
+                        .HasForeignKey("PostId");
+
+                    b.HasOne("BlogEngine.Core.Entities.PostStatus", "PostStatus")
+                        .WithMany("Posts")
+                        .HasForeignKey("PostStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -218,9 +253,7 @@ namespace BlogEngine.Data.Migrations
                 {
                     b.HasOne("BlogEngine.Core.Entities.Role", "Role")
                         .WithMany("Users")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Role");
                 });
@@ -232,7 +265,7 @@ namespace BlogEngine.Data.Migrations
 
             modelBuilder.Entity("BlogEngine.Core.Entities.PostStatus", b =>
                 {
-                    b.Navigation("Post");
+                    b.Navigation("Posts");
                 });
 
             modelBuilder.Entity("BlogEngine.Core.Entities.Role", b =>
