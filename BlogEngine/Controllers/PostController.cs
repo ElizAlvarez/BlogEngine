@@ -44,7 +44,7 @@ namespace BlogEngine.Controllers
 			}
 			catch(Exception ex)
 			{
-				return BadRequest(ex.Message);
+				return NotFound(ex.Message);
 			}
 		}
 
@@ -59,7 +59,7 @@ namespace BlogEngine.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return NotFound(ex.Message);
             }
         }
 
@@ -75,7 +75,7 @@ namespace BlogEngine.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return NotFound(ex.Message);
             }
         }
 

@@ -16,6 +16,11 @@ The solution consists of 3 main parts:
 
 This solution was implemented with the Onion Architecture. There is a core application in the center, and around there are the data and APIs. For more information about this architecture: [Onion Architecture](https://jeffreypalermo.com/2008/07/the-onion-architecture-part-1/)
 
+## Unit Tests
+To execute unit tests you can go to the test explorer in Visual Studio and click in the run green botton to run all the unit tests.
+
+Note: For now, there are only some unit tests for post service and post controller, the idea is to create unit tests for each class from repository, service, and controller.
+
 ## Installation
 
 1. Clone the repository to your local machine
@@ -26,7 +31,7 @@ Example:
 optionsBuilder.UseSqlServer(@"Server=localhost;Database=BlogTest;User ID=[User];Password=[Password];TrustServerCertificate=True;");
 ```
 
-3. Open the Nuget package manager console. In the 'Default Project' option, select BlogEngine.Data
+3. Build the solution. Open the Nuget package manager console. In the 'Default Project' option, select BlogEngine.Data
 4. Execute 
 ```bash
 PM> Add-Migration InitialReview -v
