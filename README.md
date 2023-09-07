@@ -8,7 +8,7 @@ The solution consists in 3 main parts:
 2. BlogEngine.Core: Contains the interfaces, enumerations, and entities
 3. BlogEngine.Data: Connect to the database using code first migration
 
-For this solution, Onion Architecture was implemented we have the core application in the center and infrastructure, data, and APIs are around the core. For more information about this architecture: [Onion Architecture](https://jeffreypalermo.com/2008/07/the-onion-architecture-part-1/)
+This solution was implemented with the Onion Architecture. There is a core application in the center, and around there are the data and APIs. For more information about this architecture: [Onion Architecture](https://jeffreypalermo.com/2008/07/the-onion-architecture-part-1/)
 
 ## Installation
 
