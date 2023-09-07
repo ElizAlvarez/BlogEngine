@@ -1,0 +1,409 @@
+{
+	"info": {
+		"_postman_id": "1d7966f9-be96-4f33-a223-675f1b9edd4a",
+		"name": "BlogEngine",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "560928"
+	},
+	"item": [
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "GetAllPublished",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkYjdlNWU2Mi1mZmI3LTQ5MTMtYTU4Yi1jMTNjNTc3M2ZlN2IiLCJzdWIiOiJudWJlbUBnbWFpbC5jb20iLCJlbWFpbCI6Im51YmVtQGdtYWlsLmNvbSIsIm5hbWUiOiJOdWJlTSIsInJvbGVpZCI6IjQiLCJuYmYiOjE2OTQwNjUxMTcsImV4cCI6MTY5NDA3MjMxNywiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzAwNCIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjcwMDQifQ.bT_dhrDJQHFHDqVeD5_c8tdq1cIKQTtQEGDerPxZCwo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiTnViZU0iLCJleHAiOjE2OTQxNDI5NzF9.DrOE1ufvJisz-HkjoJ6T-Lxalx_4nynM5kqdwnOeC6Y",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7004/api/post",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7004",
+							"path": [
+								"api",
+								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var date = new Date();",
+									"pm.environment.set('currentdate', date.toISOString());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3NDkxNDBkZC05N2QyLTQxMDctOGM1MS05MTEwZjIzYWE4ZTYiLCJzdWIiOiJyYXlpdG9jQGdtYWlsLmNvbSIsImVtYWlsIjoicmF5aXRvY0BnbWFpbC5jb20iLCJuYW1lIjoiUmF5b0MiLCJyb2xlaWQiOiIzIiwibmJmIjoxNjk0MDY0NjM1LCJleHAiOjE2OTQwNzE4MzUsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwMDQiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo3MDA0In0.lWWzChVMVUGl_DEz-wejvHltjk86iBM6ToDhifocZjw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"Title\": \"Apegos Feroces 2\",\n    \"TextContent\": \"Prueba\",\n    \"CreationDate\": \"{{currentdate}}\",\n    \"PostStatusId\": 1,\n    \"UserId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7004/api/post",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7004",
+							"path": [
+								"api",
+								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetByUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2NGI4NGY5Ny0zOWRiLTQzYjgtODUyYi1lNTQ3MDVhYjBhY2EiLCJzdWIiOiJudWJlbUBnbWFpbC5jb20iLCJlbWFpbCI6Im51YmVtQGdtYWlsLmNvbSIsIm5hbWUiOiJOdWJlTSIsIm5iZiI6MTY5NDA2MTU2OCwiZXhwIjoxNjk0MDY4NzY4LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MDA0IiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzAwNCJ9.KKIBEbdQGgf1uqfypDqpxfO62KYfvijlIABSA8ZqzE0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7004/api/post/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7004",
+							"path": [
+								"api",
+								"post",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPendingForApproval",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7004/api/post/GetPending",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7004",
+							"path": [
+								"api",
+								"post",
+								"GetPending"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2ZTMzOTI1YS02YjJmLTQ4ZTYtOGY3ZC01MDBhMGY3MzE1OTMiLCJzdWIiOiJKdWFuZEBnbWFpbC5jb20iLCJlbWFpbCI6Ikp1YW5kQGdtYWlsLmNvbSIsIm5hbWUiOiJKdWFuRCIsInJvbGVpZCI6IjIiLCJuYmYiOjE2OTQwNjcwNzQsImV4cCI6MTY5NDA3NDI3NCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzAwNCIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjcwMDQifQ.u3Fd32yI6Nk6yM0LIAoAGxBK5cfTvrxNG4sRE1_NkWk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7004/api/post/submit/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7004",
+							"path": [
+								"api",
+								"post",
+								"submit",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditPost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMjU5ZDM1ZC02OThlLTRhZjAtYTY3My0zZjdmNzBjYjRiZjQiLCJzdWIiOiJudWJlbUBnbWFpbC5jb20iLCJlbWFpbCI6Im51YmVtQGdtYWlsLmNvbSIsIm5hbWUiOiJOdWJlTSIsInJvbGVpZCI6IjEiLCJuYmYiOjE2OTQwNjY5NzAsImV4cCI6MTY5NDA3NDE3MCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzAwNCIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjcwMDQifQ.2vj7WWC5unwHJp069RuneHfsE8S8DPsfd8H4JKkOrtk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"PostId\": 3,\n    \"Title\": \"Viaje a Pie\",\n    \"TextContent\": \"Es una bella historia\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7004/api/post/edit",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7004",
+							"path": [
+								"api",
+								"post",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "GetCommentsByPost",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7004/api/comment/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7004",
+							"path": [
+								"api",
+								"comment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var date = new Date();",
+									"pm.environment.set('currentdate', date.toISOString());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"PostId\": 1,\n    \"CommentContent\": \"Este libro es una verdadera joya\",\n    \"CreationDate\": \"{{currentdate}}\",\n    \"UserId\": 1,\n    \"IsByEditor\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7004/api/comment",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7004",
+							"path": [
+								"api",
+								"comment"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login Public Role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"UserName\": \"NubeM\",\n    \"Email\": \"nubem@gmail.com\",\n    \"RoleId\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7004/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7004",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Writer Role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"UserName\": \"JuanD\",\n    \"Email\": \"Juand@gmail.com\",\n    \"RoleId\": \"2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7004/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7004",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Editor Role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"UserName\": \"RayoC\",\n    \"Email\": \"rayitoc@gmail.com\",\n    \"RoleId\": \"3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7004/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7004",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
